@@ -1,0 +1,1 @@
+export const setTheme = darkMode => { return darkMode ? 'bp3-dark' : ''; }

@@ -1,0 +1,9 @@
+export const FETCH_USER = 'fetch_user';
+export const SET_GLOBALS = 'set_globals';
+export const SET_SHOW_SETTINGS = 'set_show_settings';
+export const SET_DARK_MODE = 'set_dark_mode';
+export const SEARCH = 'search';
+export const SET_SEARCH_STRING = 'set_search_string';
+export const GET_MOVIE = 'get_movie';
+export const SELECT_MOVIE = 'select_movie';
+export const SAVE_RATING = 'save_rating';

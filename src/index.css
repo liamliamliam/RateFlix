@@ -1,13 +1,119 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  margin-top: 50px;
+  height: unset;
+  font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.rf-dark-mode {
+  background: #293742;
+  color: white;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a.rf-logo {
+  color: #c1c1c1;
+}
+a.rf-logo:hover {
+  color: white;
+}
+
+.rf-search-result-container {
+  position: relative;
+  display: block;
+  width: 200px;
+  height: 296px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.rf-search-result-container:not(:last-child) {
+  margin-right: 20px;
+}
+.rf-search-result-container:hover {
+  box-shadow: 3px 3px 7px black;
+}
+.rf-search-result-container:hover > .rf-search-result-overlay {
+  opacity: 1;
+}
+.rf-search-result-container:hover > .rf-search-result-tick {
+  opacity: .80;
+}
+.rf-search-result-container > .ant-image {
+  width: 100%;
+  height: 100%;
+}
+.rf-search-result-image {
+  width: 100%;
+  height: 100%;
+}
+.rf-search-result-tick {
+  position: absolute;
+  top: calc(50% - 40px);
+  left: calc(50% - 40px);
+  color: seagreen;
+  font-size: 35px;
+  opacity: .30;
+  transition: opacity 140ms;
+}
+.rf-search-result-overlay {
+  position: absolute;
+  width: calc(100%);
+  padding: 6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  background: rgba(0,0,0, .75);
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 140ms;
+  cursor: default;
+}
+.rf-search-result-overlay-top {
+  top: 0;
+}
+.rf-search-result-overlay-bottom {
+  bottom: 0;
+  text-align: center;
+}
+
+
+.rf-movie-container > .ant-row {
+  margin-bottom: 16px;
+}
+.rf-movie-poster {
+  border-radius: 8px;
+}
+.rf-movie-title > .bp3-tag {
+  margin-left: 24px;
+  top: -6px;
+}
+.rf-movie-imdb-logo img {
+  height: 20px;
+}
+.rf-movie-details-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+table.rf-movie-details th {
+  text-align: right;
+}
+
+.rfh-inline {
+  display: inline;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+.dropdown-toggle {
+  font-size: 22px;
+  color: #c1c1c1;
+}
+.dropdown-toggle:hover {
+  color: white;
 }
