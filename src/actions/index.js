@@ -17,12 +17,12 @@ export const logoutUser = () => async dispatch => {
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const searchMovies = (searchString) => async dispatch => {
+export const searchMovies = query => async dispatch => {
   dispatch({ type: SEARCH, payload: null });
-  const URL = `/api/movie/search/${searchString}`;
+  const URL = `/api/search/${query}`;
   const res = await axios.get(URL);
   console.log(`Response from ${URL}:`, res.data);
-  const searchResults = { ...res.data, searchString };
+  const searchResults = { ...res.data, query };
   dispatch({ type: SEARCH, payload: searchResults });
 };
 

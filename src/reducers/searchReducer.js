@@ -13,10 +13,10 @@ export default function searchReducer(state = {}, action) {
             movie.rating = action.payload;
           }
           return movie;
-        }); 
+        });
       }
       return stateCopy;
-      
+
     default:
       return state;
   }
