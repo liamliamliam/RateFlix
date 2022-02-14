@@ -10,7 +10,7 @@ export default combineReducers({
   auth: authReducer,
   darkMode: darkModeReducer,
   showSettings: showSettingsReducer,
-  searchResults: searchReducer,
+  search: searchReducer,
   searchString: searchStringReducer,
   movie: movieReducer
 });

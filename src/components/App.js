@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import * as actions from '../actions';
 import NavBar from './NavBar/NavBar';
@@ -12,13 +12,12 @@ import SettingsDialog from './SettingsDialog';
 
 function App() {
   const dispatch = useDispatch();
-  const { auth, globals } = useSelector(state => state);
   useEffect(() => { 
     dispatch(actions.fetchUser());
-  }, [dispatch, actions.fetchUser]);
+  }, [dispatch]);
   
   return (
-    <div style={{ padding: '16px 20px 20px 16px' }}>
+    <div>
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -27,7 +26,7 @@ function App() {
         <Route path="/search/:search_string" element={<SearchPage />} />
         <Route path="/myratings" element={<MyRatingsPage />} />
         <Route path="/movie" element={<MoviePage />} />
-        <Route path="/movie/:imdbId" element={<MoviePage />} />
+        <Route path="/movie/:id" element={<MoviePage />} />
       </Routes>
       <SettingsDialog />
     </div>

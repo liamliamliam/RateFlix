@@ -7,9 +7,9 @@ export default function searchReducer(state = {}, action) {
 
     case SAVE_RATING:
       const stateCopy = JSON.parse(JSON.stringify(state));
-      if (stateCopy && stateCopy.movies && stateCopy.movies.length) {
-        stateCopy.movies.map(movie => {
-          if (movie.imdbID === action.payload.imdbId) {
+      if (stateCopy && stateCopy.results && stateCopy.results.length) {
+        stateCopy.results.map(movie => {
+          if (movie.id === action.payload.movie_id) {
             movie.rating = action.payload;
           }
           return movie;

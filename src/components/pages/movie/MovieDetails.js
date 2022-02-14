@@ -1,39 +1,73 @@
-import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+import React from 'react';
 import { useSelector } from 'react-redux';
-
+import { Row, Col } from 'antd';
+import NumberFormat from 'react-number-format';
+import { parseLogoFile } from '../../../helpers';
 
 function MovieDetails({ movie }) {
-  const { darkMode } = useSelector((state) => state);
+  const { darkMode } = useSelector(state => state);
+  const getCrew = job => {
+    const member = movie.credits.crew.filter(person => person.job === job);
+    return member.length ? member[0].name : 'N/A';
+  };
+  const director = getCrew('Director');
+  console.log('MovieDetails - director:', director);
   return (
     <div className='rf-movie-details-container'>
-      <table className='bp3-html-table rf-movie-details'>
-        <tbody>
-          <tr>
-            <th>Plot</th>
-            <td>{movie.Plot}</td>
-          </tr>
-          <tr>
-            <th>Cast</th>
-            <td>{movie.Actors}</td>
-          </tr>
-          <tr>
-            <th>Genre</th>
-            <td>{movie.Genre}</td>
-          </tr>
-          <tr>
-            <th>Director</th>
-            <td>{movie.Director}</td>
-          </tr>
-          <tr>
-            <th>Writer</th>
-            <td>{movie.Writer}</td>
-          </tr>
-          <tr>
-            <th>Released</th>
-            <td>{movie.Released}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className='rf-movie-details-plot'>
+            {movie.overview}
+          </div>
+          <div className='rf-movie-details-header'>Genre</div>
+          <div className='rf-movie-details-data'>
+            {movie.genres.map(genre => genre.name).join(', ')}
+          </div>
+          <div className='rf-movie-details-header'>Director</div>
+          <div className='rf-movie-details-data'>
+            {movie.director}
+          </div>
+          <div className='rf-movie-details-header'>Writer</div>
+          <div className='rf-movie-details-data'>
+            {movie.writer || movie.screenplay}
+          </div>
+          <div className='rf-movie-details-header'>Released</div>
+          <div className='rf-movie-details-data'>
+            {moment(movie.release_date).format('dddd, Mo MMMM YYYY')}
+          </div>
+
+          <div className='rf-movie-details-header'>Budget</div>
+          <div className='rf-movie-details-data'>
+            <NumberFormat
+              value={movie.budget}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'$'}
+            />
+          </div>
+          <div className='rf-movie-details-header'>Revenue</div>
+          <div className='rf-movie-details-data'>
+            <NumberFormat
+              value={movie.revenue}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'$'}
+            />
+          </div>
+          <div className='rf-movie-details-header'>Production Companies</div>
+          <div className='rf-movie-details-data'>
+          {movie.production_companies
+                .filter(pc => !!pc.logo_path)
+                .map(pc => {
+                  return (
+                    <img
+                      src={parseLogoFile(pc.logo_path, 'w92')}
+                      key={pc.id}
+                      className='rf-movie-details-pc-logo'
+                      style={{ verticalAlign: 'top', marginTop: '4px', marginRight: '16px'  }}
+                    />
+                  );
+                })}
+          </div>
     </div>
   );
 }

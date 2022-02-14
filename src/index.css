@@ -2,7 +2,7 @@ body {
   margin: 0;
   margin-top: 50px;
   height: unset;
-  font-family: 'Roboto';
+  font-family: 'Poppins';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -21,6 +21,12 @@ a.rf-logo {
 }
 a.rf-logo:hover {
   color: white;
+}
+
+.rf-page-container {
+  width: 100%;
+  padding: 16px 20px;
+  background-size: 100%;
 }
 
 .rf-search-result-container {
@@ -81,26 +87,106 @@ a.rf-logo:hover {
   text-align: center;
 }
 
-
+.rf-movie-container {
+  color: white;
+}
 .rf-movie-container > .ant-row {
   margin-bottom: 16px;
 }
+.rf-movie-poster-container {
+  width: 260px;
+}
 .rf-movie-poster {
-  border-radius: 8px;
+  width: 100%;
 }
-.rf-movie-title > .bp3-tag {
-  margin-left: 24px;
-  top: -6px;
+.rf-movie-title {
+  font-size: 40px;
+  font-weight: bold;
+  padding-right: 16px;
+  position: relative;
+  background: rgba(0,0,0, .60);
+  padding: 12px;
 }
-.rf-movie-imdb-logo img {
-  height: 20px;
+.rf-movie-title-year {
+  margin-left: 18px;
+  font-size: 16px;
+  background: rgba(10,10,10, .90);
+  border-radius: 3px;
+  padding: 4px 8px;
+  position: relative;
+  top: -10px;  
+}
+.rf-movie-title-subtitle {
+  font-size: 18px;
+}
+.rf-movie-imdb-logo {
+  height: 24px;
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  cursor: pointer;
+}
+.rf-movie-rating-container {
+  background: rgba(0,0,0, .70);
+  padding: 12px;
+}
+.rf-movie-rating-title {
+  margin-right: 16px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.rf-movie-rating-container textarea {
+  background: rgba(0,0,0, .70);
+  color: white;
 }
 .rf-movie-details-container {
-  max-height: 300px;
-  overflow-y: auto;
+  background: rgba(0,0,0, .70);
+  padding: 12px;
 }
-table.rf-movie-details th {
-  text-align: right;
+.rf-movie-details-container .ant-row {
+  margin: 12px 0;
+}
+.rf-movie-details-plot {
+  margin-bottom: 16px;
+}
+.rf-movie-details-header {
+  font-weight: bold;
+  font-size: 16px;
+}
+.rf-movie-details-data {
+  margin-bottom: 16px;
+}
+.rf-movie-details-pc-logo {
+  max-height: 40px;
+  -webkit-filter: drop-shadow(5px 5px 5px #fff);
+  filter: drop-shadow(2px 2px 2px #fff);
+}
+.rf-movie-cast-container {
+  background: rgba(0,0,0, .60);
+  padding: 12px;
+}
+.rf-movie-cast {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  width: 110px;
+  height: 140px;
+}
+.rf-movie-cast-image-container {
+  display: inline-block;
+  border-radius: 50%;
+  width: 90px;
+  height: 100px;
+  overflow: hidden;
+}
+.rf-movie-cast-image {
+  display: inline-block;
+  width: 90px;
+  height: 120px;
+  position: relative;
+  top: -4;
 }
 
 .rfh-inline {
@@ -117,3 +203,7 @@ table.rf-movie-details th {
 .dropdown-toggle:hover {
   color: white;
 }
+
+
+ /* Ant Design Mods */
+ .ant-row:not(:first-child) { margin-top: 16px; }

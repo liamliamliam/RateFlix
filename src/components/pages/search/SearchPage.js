@@ -9,7 +9,7 @@ import MovieResult from './MovieResult';
 
 function SearchPage(props) {
   const dispatch = useDispatch();
-  const { darkMode, searchResults, searchString } = useSelector((state) => state);
+  const { darkMode, search, searchString } = useSelector(state => state);
   const { search_string } = useParams();
   const [movies, setMovies] = useState([]);
   useEffect(() => {
@@ -20,14 +20,15 @@ function SearchPage(props) {
     console.log(`Doing search with '${search_string}'`);
   }, [search_string]);
   return (
+    <div className='rf-page-container'>
     <Row>
-      {searchResults && !searchResults.movies && (
-        <h1 className={`${setTheme(darkMode)}`}>Search</h1>
-      )}
-      {searchResults &&
-        searchResults.movies &&
-        searchResults.movies.map((m, i) => <MovieResult movie={m} key={i} />)}
+      {search && search.results &&
+        search.results.length &&
+        search.results.map(movie => {
+          return movie.poster_path ? <MovieResult movie={movie} key={movie.id} /> : null;
+        })}
     </Row>
+    </div>
   );
 }
 

@@ -6,19 +6,19 @@ import * as actions from '../../../actions';
 import { AppToaster } from '../../../Toaster';
 import { setTheme } from '../../../helpers';
 
-function MovieRating({ movie, userRating }) {
+function MovieRating({ movie }) {
   const dispatch = useDispatch();
   const { auth, darkMode } = useSelector(state => state);
-  const [rating, setRating] = useState(0);
+  const [score, setScore] = useState(0);
   const [notes, setNotes] = useState('');
   const [saving, setSaving] = useState(false);
   const handleSave = async () => {
     try {
       setSaving(true);
       await dispatch(actions.saveRating({
-        imdbId: movie.imdbID,
-        userId: auth._id,
-        rating,
+        movie_id: movie.id,
+        user_id: auth._id,
+        score,
         notes
       }));
       setSaving(false);
@@ -28,33 +28,37 @@ function MovieRating({ movie, userRating }) {
     }
   };
   useEffect(() => {
-    if (userRating) {
-      setRating(userRating.rating);
-      setNotes(userRating.notes);
+    if (movie.rating) {
+      setScore(movie.rating.score);
+      setNotes(movie.rating.notes);
     }
     return () => {
-      setRating(0);
+      setScore(0);
       setNotes('');
     }
   }, []);
   return (
-    <Card className={`${setTheme(darkMode)} rf-rating-card`}>
+    <div className='rf-movie-rating-container'>
       <Row>
-        <Col span={12}>
-          <h3 className={`${setTheme(darkMode)}`}>My Rating</h3>
-        </Col>
-        <Col span={12} style={{ textAlign: 'right', fontSize: 30 }}>
+        <Col span={20}>
+          <span className='rf-movie-rating-title'>
+            Your Rating: 
+          </span>
           <Rate
             className='rf-movie-rate'
             allowHalf
             count={10}
-            value={rating}
-            onChange={(v) => setRating(v)}
-            style={{ position: 'relative', top: -13, fontSize: 26 }}
+            value={score}
+            onChange={v => setScore(v)}
           />
         </Col>
+        <Col span={4} style={{ textAlign: 'right' }}>
+          {!!score && <Button loading={saving} onClick={handleSave}>
+            Save
+          </Button>}
+        </Col>
       </Row>
-      <Row>
+      {!!score && <Row>
         <Col span={24}>
           <TextArea
             large
@@ -62,18 +66,12 @@ function MovieRating({ movie, userRating }) {
             value={notes}
             rows={6}
             maxLength={10000}
+            placeholder={`Add your thoughts on ${movie.title}`}
             onChange={(e) => setNotes(e.target.value)}
           />
         </Col>
-      </Row>
-      <Row style={{ marginTop: 16 }}>
-        <Col span={24} style={{ textAlign: 'right' }}>
-          <Button loading={saving} onClick={handleSave}>
-            Save
-          </Button>
-        </Col>
-      </Row>
-    </Card>
+      </Row>}
+    </div>
   );
 }
 

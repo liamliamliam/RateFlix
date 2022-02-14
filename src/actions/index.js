@@ -17,13 +17,12 @@ export const logoutUser = () => async dispatch => {
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const searchMovies = query => async dispatch => {
+export const searchMovies = (query, page) => async dispatch => {
   dispatch({ type: SEARCH, payload: null });
-  const URL = `/api/search/${query}`;
+  const URL = `/api/search?query=${query}&page=${page}`;
   const res = await axios.get(URL);
   console.log(`Response from ${URL}:`, res.data);
-  const searchResults = { ...res.data, query };
-  dispatch({ type: SEARCH, payload: searchResults });
+  dispatch({ type: SEARCH, payload: { ...res.data, query } });
 };
 
 export const getMovie = imdbId => async dispatch => {
@@ -32,6 +31,7 @@ export const getMovie = imdbId => async dispatch => {
 };
 
 export const saveRating = rating => async dispatch => {
+  console.log('saveRating() - rating:', rating);
   const res = await axios.post('/api/rating', rating);
   dispatch({ type: SAVE_RATING, payload: res.data });
 };
