@@ -4,18 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { InputGroup, Icon } from '@blueprintjs/core';
 import { SET_SEARCH_STRING } from '../actions/types';
 
-
 function SearchInput() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { searchString } = useSelector((state) => state);
+  const { searchString } = useSelector(state => state);
   return (
     <InputGroup
-      className='bp3-dark'
       value={searchString}
-      leftElement={<Icon icon="search" />}
-      placeholder="Search Movies..."
-      onChange={(e) =>
+      leftElement={<Icon icon='search' />}
+      placeholder='Search Movies...'
+      onChange={e =>
         dispatch({ type: SET_SEARCH_STRING, payload: e.target.value })
       }
       onKeyUp={e => {

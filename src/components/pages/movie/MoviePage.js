@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Row, Col } from 'antd';
 import axios from 'axios';
 
-import { Row, Col, Image } from 'antd';
-import { Tag, Button, Classes } from '@blueprintjs/core';
-import { setTheme } from '../../../helpers';
 import defaultImage from '../../../media/default-movie-poster.jpg';
 import imdbLogo from '../../../media/IMDB_Logo_2016.svg';
-
 import MovieDetails from './MovieDetails';
 import MovieCast from './MovieCast';
 import MovieRating from './MovieRating';
 
 function MoviePage() {
   const { id } = useParams();
-  const { auth, darkMode } = useSelector(state => state);
+  const { auth } = useSelector(state => state);
   const [loadingMovie, setLoadingMovie] = useState(false);
   const [loadingError, setLoadingError] = useState(false);
   const [movie, setMovie] = useState(null);
@@ -56,13 +53,10 @@ function MoviePage() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div
-          className={`${setTheme(darkMode)} rf-movie-container`}
-          style={{ width: '100%' }}
-        >
+        <div className='rf-movie-container' style={{ width: '100%' }}>
           <Row>
             <Col span={24}>
-              <div className={`${setTheme(darkMode)} rf-movie-title`}>
+              <div className='rf-movie-title'>
                 {movie.title}
                 <span className='rf-movie-title-year'>
                   {movie.release_date.substring(0, 4)}
@@ -101,14 +95,21 @@ function MoviePage() {
             <Col sm={18} xs={24}>
               <Row>
                 <Col span={24}>
-                  <MovieRating movie={movie} />
+                  <div className='rf-page-section'>
+                    {movie.overview}
+                  </div>
                 </Col>
               </Row>
               <Row>
                 <Col span={24}>
-                  <MovieCast cast={movie.credits.cast} darkMode={darkMode} />
+                  <MovieRating movie={movie} />
                 </Col>
               </Row>
+              {!!movie.credits.cast.length && <Row>
+                <Col span={24}>
+                  <MovieCast cast={movie.credits.cast} />
+                </Col>
+              </Row>}
             </Col>
           </Row>
         </div>
@@ -121,7 +122,7 @@ function MoviePage() {
       if (loadingError) {
         return (
           <div>
-            Something went wrong while trying to load the movie details. Please
+            Something went wrong while trying to load the movie. Please
             try again.
           </div>
         );

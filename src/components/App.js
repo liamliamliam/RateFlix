@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import * as actions from '../actions';
 import NavBar from './NavBar/NavBar';
@@ -12,8 +12,11 @@ import SettingsDialog from './SettingsDialog';
 
 function App() {
   const dispatch = useDispatch();
+  const { auth } = useSelector(state => state);
+
   useEffect(() => { 
     dispatch(actions.fetchUser());
+    if (auth) document.body.classList[auth.darkMode ? 'add' : 'remove']('bp3-dark');
   }, [dispatch]);
   
   return (

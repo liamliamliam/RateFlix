@@ -1,6 +1,6 @@
 import React from 'react';
-import { Row, Col, Image } from 'antd';
-import { setTheme, parsePersonFile } from '../../../helpers';
+import { Image } from 'antd';
+import { parsePersonFile } from '../../../helpers';
 import femalePic from '../../../media/default-profile-female.jpg';
 import malePic from '../../../media/default-profile-male.jpg';
 

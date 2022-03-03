@@ -4,33 +4,22 @@ import { useNavigate } from 'react-router';
 import { Icon } from '@blueprintjs/core';
 import { Image, Rate } from 'antd';
 import * as actions from '../../../actions';
-import { setTheme, parsePosterFile } from '../../../helpers';
+import { parsePosterFile } from '../../../helpers';
 
 import defaultImage from '../../../media/default-movie-poster.jpg';
 
 function MovieResult({ movie }) {
   const dispatch = useDispatch();
-  const { auth, darkMode } = useSelector(state => state);
+  const { auth } = useSelector(state => state);
   const navigate = useNavigate();
   const [score, setScore] = useState(movie.rating ? movie.rating.score : 0);
-  const saveRating = value => {
-    console.log('Saving rating:', value);
-    dispatch(actions.saveRating({
-      movie_id: movie.id,
-      user_id: auth._id,
-      score: value
-    }));
-  }
   useEffect(() => {
     return () => {
       setScore(0);
     }
   }, []);
   return (
-    <div
-      className={`${setTheme(darkMode)} rf-search-result-container`}
-      onClick={() => navigate(`/movie/${movie.id}`)}
-    >
+    <div className='rf-search-result-container' onClick={() => navigate(`/movie/${movie.id}`)}>
       <Image
         src={parsePosterFile(movie.poster_path)}
         className='rf-search-result-image'
@@ -51,7 +40,7 @@ function MovieResult({ movie }) {
           value={score}
           onChange={v => {
             setScore(v);
-            saveRating(v);
+            dispatch(actions.saveRating(auth._id, movie, v));
           }}
           style={{ position: 'relative', fontSize: 11 }}
         />

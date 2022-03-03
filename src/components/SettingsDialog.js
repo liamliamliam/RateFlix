@@ -4,7 +4,6 @@ import { Dialog, Classes, FormGroup, InputGroup, Intent, Switch, Button } from '
 import { Row, Col } from 'antd';
 import * as actions from '../actions';
 import { SET_SHOW_SETTINGS } from '../actions/types';
-import { setTheme } from '../helpers';
 
 function SettingsDialog() {
   const dispatch = useDispatch();
@@ -27,10 +26,10 @@ function SettingsDialog() {
     console.log('Saving settings...');
     dispatch(actions.updateUser({ firstName, lastName, email, darkMode: darkModeChecked }));
     dispatch({ type: SET_SHOW_SETTINGS, payload: false });
+    document.body.classList[darkModeChecked ? 'add' : 'remove']('bp3-dark');
   };
   return (
     <Dialog
-      className={`${setTheme(darkMode)}`}
       title='Settings'
       isOpen={showSettings}
       onClose={() => dispatch({ type: SET_SHOW_SETTINGS, payload: false })}

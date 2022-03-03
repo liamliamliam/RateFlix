@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Row } from 'antd';
+import { Row, Col } from 'antd';
 import * as actions from '../../../actions';
 import { SET_SEARCH_STRING } from '../../../actions/types';
-import { setTheme } from '../../../helpers';
 import MovieResult from './MovieResult';
+import Pagination from './Pagination';
 
 function SearchPage(props) {
   const dispatch = useDispatch();
-  const { darkMode, search, searchString } = useSelector(state => state);
+  const { search, searchString } = useSelector(state => state);
   const { search_string } = useParams();
-  const [movies, setMovies] = useState([]);
   useEffect(() => {
     if (!searchString || searchString !== search_string) {
       dispatch({ type: SET_SEARCH_STRING, payload: search_string });
@@ -19,15 +18,33 @@ function SearchPage(props) {
     if (search_string) dispatch(actions.searchMovies(search_string));
     console.log(`Doing search with '${search_string}'`);
   }, [search_string]);
+  if (!search) return '';
   return (
     <div className='rf-page-container'>
-    <Row>
-      {search && search.results &&
-        search.results.length &&
-        search.results.map(movie => {
-          return movie.poster_path ? <MovieResult movie={movie} key={movie.id} /> : null;
-        })}
-    </Row>
+      <Row>
+        <Col span={24}>
+          <div className='rf-search-title'>
+            Results for: {search_string}
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        {search &&
+          search.results &&
+          search.results.length &&
+          search.results.map(movie => {
+            return movie.poster_path ? (
+              <MovieResult movie={movie} key={movie.id} />
+            ) : null;
+          })}
+      </Row>
+      <Row>
+        <Col span={24}>
+          <div className='rf-search-footer'>
+            <Pagination page={search.page} total_pages={search.total_pages} />
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 }
