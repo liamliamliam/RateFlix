@@ -8,9 +8,10 @@ function Table_Footer({
   set_ratings_per_page,
   page_number,
   set_page_number,
-  page_count
+  ratings_count
 }) {
   const [rpp_list_open, set_rpp_list_open] = useState(false);
+  const [page_count, set_page_count] = useState(Math.ceil(ratings_count / ratings_per_page));
 
   const render_pagination = () => {
     const buttons = [];
@@ -74,6 +75,7 @@ function Table_Footer({
                         onClick={() => {
                           set_ratings_per_page(rpp);
                           set_rpp_list_open(false);
+                          set_page_count(Math.ceil(ratings_count / rpp))
                         }}
                       />
                     ))}

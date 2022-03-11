@@ -3,7 +3,7 @@ import { Button } from '@blueprintjs/core';
 
 function Table_Header({ sort, set_sort }) {
   const arrow = field =>
-    sort.field == field ? (sort.asc ? 'arrow-up' : 'arrow-down') : '';
+    sort.field == field ? (sort.asc ? 'arrow-up' : 'arrow-down') : null;
   const handleClick = field => {
     set_sort({
       field,

@@ -33,7 +33,7 @@ function MyRatingsPage() {
 
   const [ratings_per_page, set_ratings_per_page] = useState(10);
   const [page_number, set_page_number] = useState(1);
-  const [page_count, set_page_count] = useState(0);
+  
 
   const load_ratings = async () => {
     const dcr = date_created_range.map(d => d.getTime());
@@ -66,7 +66,6 @@ function MyRatingsPage() {
         new Date(r.dateModified) >= date_modified_range[0] &&
         new Date(r.dateModified) <= date_modified_range[1]
     );
-    set_page_count(Math.ceil(ratings.length / ratings_per_page));
     set_filtered_ratings(ratings);
   };
 
@@ -146,8 +145,13 @@ function MyRatingsPage() {
     render_page();
   }, [filtered_ratings]);
   useEffect(() => {
+    console.log('page_number changed:', page_number);
     render_page();
   }, [page_number]);
+  useEffect(() => {
+    console.log('ratings_per_page changed:', ratings_per_page);
+    set_page_number(1);
+  }, [ratings_per_page]);
 
   return (
     <div className='rf-page-container'>
@@ -199,7 +203,7 @@ function MyRatingsPage() {
               set_ratings_per_page={set_ratings_per_page}
               page_number={page_number}
               set_page_number={set_page_number}
-              page_count={page_count}
+              ratings_count={filtered_ratings.length}
             />
           </table>
         </Col>
