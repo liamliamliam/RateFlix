@@ -33,7 +33,7 @@ a.rf-logo:hover {
   padding: 12px;
 }
 .rf-page-section {
-  background: rgba(0,0,0, .60);
+  background: rgba(0,0,0, .20);
   padding: 12px;
 }
 
@@ -216,6 +216,38 @@ a.rf-logo:hover {
   position: relative;
   top: -4;
 }
+.rf-myratings-filters {
+  display: flex;
+}
+.rf-myratings-filters > div:not(:first-child) {
+  margin-left: 8px;
+}
+.rf-myratings-filter-title {
+  font-size: 11px;
+}
+.rf-myratings-filter-data {
+  font-size: 16px;
+}
+.rf-myratings-list {
+  width: 100%;
+}
+.rf-myratings-list > thead, .rf-myratings-list > tfoot {
+  background: rgba(0,0,0,0.1);
+}
+.rf-myratings-list > thead > tr > th:nth-child(2) { width: 100%; }
+.rf-myratings-list > tbody > tr:not(:first-child) {
+  border-top: 1px solid rgba(0,0,0,0.2);
+}
+.rf-myratings-list > tbody > tr > td {
+  vertical-align: top;
+}
+.rf-myratings-list td, .rf-myratings-list th { 
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+.rf-myratings-pagination-button:not(:last-child) {
+  margin-right: 8px;
+}
 
 .rfh-inline {
   display: inline;
@@ -236,6 +268,8 @@ a.rf-logo:hover {
 .ta-l { text-align: left; }
 .ta-c { text-align: center; }
 .ta-r { text-align: right; }
+.f-l { float: left; }
+.f-r { float: right; }
 
   /* BlueprintJS Mods */
 .bp3-dark {

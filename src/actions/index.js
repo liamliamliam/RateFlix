@@ -42,6 +42,7 @@ export const saveRating = (user_id, movie, score, notes = null) => async dispatc
       backdrop: movie.backdrop_path,
       poster: movie.poster_path,
       release_date: movie.release_date,
+      year: new Date(movie.release_date).getFullYear(),
       title: movie.title,
       vote_average: movie.vote_average,
       vote_count: movie.vote_count

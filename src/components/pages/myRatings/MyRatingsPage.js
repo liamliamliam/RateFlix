@@ -1,33 +1,154 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { sub } from 'date-fns';
 import { Row, Col } from 'antd';
-import { Menu, MenuItem, Button, RangeSlider } from '@blueprintjs/core';
-import { Popover2 } from '@blueprintjs/popover2';
-import './myRatings.css';
+import { Button, Divider } from '@blueprintjs/core';
 
-import RatingFilter from './RatingFilter';
-import Rating from './Rating';
+import Score_Filter from './filters/Score_Filter';
+import Year_Filter from './filters/Year_Filter';
+import DateRange_Filter from './filters/DateRange_Filter';
+import Table_Header from './table/Table_Header';
+import Table_Footer from './table/Table_Footer';
+import Table_Content from './table/Table_Content';
 
 function MyRatingsPage() {
-  const [myRatings, setMyRatings] = useState([]);
-  const loadMyRatings = async () => {
-    const res = await axios.get('/api/myratings');
-    setMyRatings(res.data);
+  const [all_ratings, set_all_ratings] = useState([]);
+  const [filtered_ratings, set_filtered_ratings] = useState([]);
+  const [render_ratings, set_render_ratings] = useState([]);
+
+  const [sort, set_sort] = useState({ field: 'score', asc: false });
+  const [score_range, set_score_range] = useState([0, 10]);
+  const [year_range, set_year_range] = useState([
+    1888,
+    new Date().getFullYear()
+  ]);
+  const [date_created_range, set_date_created_range] = useState([
+    sub(new Date(), { years: 1 }),
+    new Date()
+  ]);
+  const [date_modified_range, set_date_modified_range] = useState([
+    sub(new Date(), { years: 1 }),
+    new Date()
+  ]);
+
+  const [ratings_per_page, set_ratings_per_page] = useState(10);
+  const [page_number, set_page_number] = useState(1);
+  const [page_count, set_page_count] = useState(0);
+
+  const load_ratings = async () => {
+    const dcr = date_created_range.map(d => d.getTime());
+    let url = '/api/myratings';
+    // url += `?sr=${score_range.join(',')}`;
+    // url += `&yr=${year_range.join(',')}`;
+    // url += `&dcr=${date_created_range.map(d => d.toISOString()).join(',')}`;
+    // url += `&dmr=${date_modified_range.map(d => d.toISOString()).join(',')}`;
+    const res = await axios.get(url);
+    set_all_ratings(res.data);
+    //console.log('api/myratings - res.data:', res.data);
   };
-  useEffect(() => {
-    loadMyRatings();
-  }, []);
-  const renderMyRatings = () => {
-    console.log('renderMyRatings() - myRatings:', myRatings);
-    if (!myRatings.length) return (
-      <tr>
-        <td colSpan={4} className='ta-c'>
-          No Ratings Found!
-        </td>
-      </tr>
+
+  const filter_ratings = () => {
+    let ratings = [...all_ratings];
+    //console.log('filter_ratings() - ratings:', ratings);
+    ratings = ratings.filter(
+      r => r.score >= score_range[0] && r.score <= score_range[1]
     );
-    return myRatings.map(rating => <Rating rating={rating} />);
+    ratings = ratings.filter(
+      r => r.movie.year >= year_range[0] && r.movie.year <= year_range[1]
+    );
+    ratings = ratings.filter(
+      r =>
+        new Date(r.dateCreated) >= date_created_range[0] &&
+        new Date(r.dateCreated) <= date_created_range[1]
+    );
+    ratings = ratings.filter(
+      r =>
+        new Date(r.dateModified) >= date_modified_range[0] &&
+        new Date(r.dateModified) <= date_modified_range[1]
+    );
+    set_page_count(Math.ceil(ratings.length / ratings_per_page));
+    set_filtered_ratings(ratings);
   };
+
+  const sort_ratings = () => {
+    switch (sort.field) {
+      case 'score':
+        set_filtered_ratings(
+          [...filtered_ratings].sort((a, b) =>
+            sort.asc
+              ? a[sort.field] - b[sort.field]
+              : b[sort.field] - a[sort.field]
+          )
+        );
+        break;
+      case 'dateModified':
+      case 'dateCreated':
+        set_filtered_ratings(
+          [...filtered_ratings].sort((a, b) =>
+            sort.asc
+              ? new Date(a[sort.field]) - new Date(b[sort.field])
+              : new Date(b[sort.field]) - new Date(a[sort.field])
+          )
+        );
+        break;
+      case 'title':
+        set_filtered_ratings(
+          [...filtered_ratings].sort((a, b) => {
+            if (!sort.asc)
+              return a.movie.title < b.movie.title
+                ? 1
+                : a.movie.title > b.movie.title
+                ? -1
+                : 0;
+            return a.movie.title > b.movie.title
+              ? 1
+              : a.movie.title < b.movie.title
+              ? -1
+              : 0;
+          })
+        );
+        break;
+      case 'year':
+      case 'vote_average':
+        set_filtered_ratings(
+          [...filtered_ratings].sort((a, b) =>
+            sort.asc
+              ? a.movie[sort.field] - b.movie[sort.field]
+              : b.movie[sort.field] - a.movie[sort.field]
+          )
+        );
+        break;
+    }
+  };
+
+  const render_page = () => {
+    set_render_ratings(
+      filtered_ratings.slice(
+        (page_number - 1) * ratings_per_page,
+        (page_number - 1) * ratings_per_page + ratings_per_page
+      )
+    );
+  };
+
+  useEffect(() => {
+    load_ratings();
+  }, []);
+  useEffect(() => {
+    filter_ratings();
+  }, [score_range, year_range, date_created_range, date_modified_range]);
+  useEffect(() => {
+    filter_ratings();
+  }, [all_ratings]);
+  useEffect(() => {
+    sort_ratings();
+  }, [sort]);
+  useEffect(() => {
+    render_page();
+  }, [filtered_ratings]);
+  useEffect(() => {
+    render_page();
+  }, [page_number]);
+
   return (
     <div className='rf-page-container'>
       <Row>
@@ -39,27 +160,48 @@ function MyRatingsPage() {
         <Col span={24}>
           <div className='rf-page-section'>
             <Row>
-              <Col span={6}>
-                <Popover2
-                  placement='bottom-end'
-                  content={
-                    <Menu>
-                      <MenuItem text='Rating: High to Low' />
-                      <MenuItem text='Rating: Low to High' />
-                      <MenuItem text='Movie: Title' />
-                      <MenuItem text='Movie: Year' />
-                    </Menu>
-                  }
-                >
-                  <Button icon='sort' text='Sort' />
-                </Popover2>
+              <Col xs={24} sm={20}>
+                <div className='rf-myratings-filters'>
+                  <Score_Filter
+                    range={score_range}
+                    onChange={set_score_range}
+                  />
+                  <Divider />
+                  <Year_Filter onChange={set_year_range} />
+                  <Divider />
+                  <DateRange_Filter
+                    title='Date Created'
+                    date_range={date_created_range}
+                    onChange={set_date_created_range}
+                  />
+                  <Divider />
+                  <DateRange_Filter
+                    title='Date Modified'
+                    date_range={date_modified_range}
+                    onChange={set_date_modified_range}
+                  />
+                </div>
               </Col>
-              <Col span={6}>
-                <h3>Rating</h3>
-                <RatingFilter />
+              <Col xs={24} sm={4} className='ta-r'>
+                <Button large text='Apply' onClick={load_ratings} />
               </Col>
             </Row>
           </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <table className='rf-myratings-list'>
+            <Table_Header sort={sort} set_sort={set_sort} />
+            <Table_Content items={render_ratings} />
+            <Table_Footer
+              ratings_per_page={ratings_per_page}
+              set_ratings_per_page={set_ratings_per_page}
+              page_number={page_number}
+              set_page_number={set_page_number}
+              page_count={page_count}
+            />
+          </table>
         </Col>
       </Row>
     </div>
