@@ -37,10 +37,6 @@ a.rf-logo:hover {
   padding: 12px;
 }
 
-.rf-myratings-controls-container {
-
-}
-
 .rf-search-title {
   font-size: 40px;
   font-weight: bold;
@@ -270,6 +266,16 @@ a.rf-logo:hover {
 .ta-r { text-align: right; }
 .f-l { float: left; }
 .f-r { float: right; }
+.m { margin: 8px; }
+.mt { margin-top: 8px; }
+.mr { margin-right: 8px; }
+.mb { margin-bottom: 8px; }
+.ml { margin-left: 8px; }
+.m-lg { margin: 16px; }
+.mt-lg { margin-top: 16px; }
+.mr-lg { margin-right: 16px; }
+.mb-lg { margin-bottom: 16px; }
+.ml-lg { margin-left: 16px; }
 
   /* BlueprintJS Mods */
 .bp3-dark {
@@ -286,3 +292,4 @@ a.rf-logo:hover {
 
   /* Ant Design Mods */
 .ant-row:not(:last-child) { margin-bottom: 16px; }
+.ant-row.gaped > .ant-col:not(:last-child) { margin-right: 16px; }

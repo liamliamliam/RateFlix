@@ -18,6 +18,8 @@ function App() {
     dispatch(actions.fetchUser());
     if (auth) document.body.classList[auth.darkMode ? 'add' : 'remove']('bp3-dark');
   }, [dispatch]);
+
+  console.log('Auth:', auth);
   
   return (
     <div>

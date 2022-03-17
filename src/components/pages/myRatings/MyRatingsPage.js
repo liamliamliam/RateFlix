@@ -10,13 +10,14 @@ import DateRange_Filter from './filters/DateRange_Filter';
 import Table_Header from './table/Table_Header';
 import Table_Footer from './table/Table_Footer';
 import Table_Content from './table/Table_Content';
+import Title_Filter from './filters/Title_Filter';
 
 function MyRatingsPage() {
   const [all_ratings, set_all_ratings] = useState([]);
   const [filtered_ratings, set_filtered_ratings] = useState([]);
   const [render_ratings, set_render_ratings] = useState([]);
 
-  const [sort, set_sort] = useState({ field: 'score', asc: false });
+  const [title_query, set_title_query] = useState('');
   const [score_range, set_score_range] = useState([0, 10]);
   const [year_range, set_year_range] = useState([
     1888,
@@ -30,6 +31,8 @@ function MyRatingsPage() {
     sub(new Date(), { years: 1 }),
     new Date()
   ]);
+  
+  const [sort, set_sort] = useState({ field: 'score', asc: false });
 
   const [ratings_per_page, set_ratings_per_page] = useState(10);
   const [page_number, set_page_number] = useState(1);
@@ -48,8 +51,10 @@ function MyRatingsPage() {
   };
 
   const filter_ratings = () => {
+    set_page_number(1);
     let ratings = [...all_ratings];
-    //console.log('filter_ratings() - ratings:', ratings);
+    console.log('filter_ratings() - ratings:', ratings);
+    if (title_query.length > 2) ratings = ratings.filter(r => r.movie.title.toLowerCase().indexOf(title_query.toLowerCase()) > -1);
     ratings = ratings.filter(
       r => r.score >= score_range[0] && r.score <= score_range[1]
     );
@@ -134,7 +139,7 @@ function MyRatingsPage() {
   }, []);
   useEffect(() => {
     filter_ratings();
-  }, [score_range, year_range, date_created_range, date_modified_range]);
+  }, [title_query, score_range, year_range, date_created_range, date_modified_range]);
   useEffect(() => {
     filter_ratings();
   }, [all_ratings]);
@@ -145,11 +150,12 @@ function MyRatingsPage() {
     render_page();
   }, [filtered_ratings]);
   useEffect(() => {
-    console.log('page_number changed:', page_number);
+    //console.log('page_number changed:', page_number);
     render_page();
   }, [page_number]);
   useEffect(() => {
-    console.log('ratings_per_page changed:', ratings_per_page);
+    //console.log('ratings_per_page changed:', ratings_per_page);
+    render_page();
     set_page_number(1);
   }, [ratings_per_page]);
 
@@ -164,8 +170,10 @@ function MyRatingsPage() {
         <Col span={24}>
           <div className='rf-page-section'>
             <Row>
-              <Col xs={24} sm={20}>
+              <Col xs={24}>
                 <div className='rf-myratings-filters'>
+                  <Title_Filter query={title_query} onChange={set_title_query} />
+                  <Divider />
                   <Score_Filter
                     range={score_range}
                     onChange={set_score_range}
@@ -185,9 +193,6 @@ function MyRatingsPage() {
                     onChange={set_date_modified_range}
                   />
                 </div>
-              </Col>
-              <Col xs={24} sm={4} className='ta-r'>
-                <Button large text='Apply' onClick={load_ratings} />
               </Col>
             </Row>
           </div>
