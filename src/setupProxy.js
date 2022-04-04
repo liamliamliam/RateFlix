@@ -6,6 +6,7 @@ const url = {
 };
 
 module.exports = function(app) {
+  console.log('createProxyMiddleware - NODE_ENV:', proces.env.NODE_ENV);
   app.use(
     '/api',
     createProxyMiddleware({
