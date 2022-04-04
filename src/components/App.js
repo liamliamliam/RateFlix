@@ -15,7 +15,7 @@ function App() {
   const { auth } = useSelector(state => state);
 
   useEffect(() => { 
-    dispatch(actions.fetchUser());
+    //dispatch(actions.fetchUser());
     if (auth) document.body.classList[auth.darkMode ? 'add' : 'remove']('bp3-dark');
   }, [dispatch]);
 
