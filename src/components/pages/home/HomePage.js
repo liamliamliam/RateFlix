@@ -4,18 +4,21 @@ import axios from 'axios';
 import { Row, Col } from 'antd';
 import { Card, H1, H5, Callout } from '@blueprintjs/core';
 
+import { backend } from '../../../axiosConfig';
+
 function HomePage() {
   const { auth } = useSelector(state => state);
   const [stats, set_stats] = useState(null);
   const [loaded, set_loaded] = useState(false);
 
   const load_stats = async () => {
-    const res = await axios.get('/api/stats');
+    const res = await backend.get('/api/stats');
+    console.log('response from /api/stats:', res.data);
     set_stats(res.data);
   };
 
   useEffect(() => {
-    //load_stats();
+    load_stats();
   }, []);
   useEffect(() => {
     console.log('Stats changed:', stats);

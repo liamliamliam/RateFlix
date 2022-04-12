@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { sub } from 'date-fns';
 import { Row, Col } from 'antd';
 import { Button, Divider } from '@blueprintjs/core';
 
+import { backend } from '../../../axiosConfig';
 import Score_Filter from './filters/Score_Filter';
 import Year_Filter from './filters/Year_Filter';
 import DateRange_Filter from './filters/DateRange_Filter';
@@ -45,7 +45,7 @@ function MyRatingsPage() {
     // url += `&yr=${year_range.join(',')}`;
     // url += `&dcr=${date_created_range.map(d => d.toISOString()).join(',')}`;
     // url += `&dmr=${date_modified_range.map(d => d.toISOString()).join(',')}`;
-    const res = await axios.get(url);
+    const res = await backend.get(url);
     set_all_ratings(res.data);
     //console.log('api/myratings - res.data:', res.data);
   };

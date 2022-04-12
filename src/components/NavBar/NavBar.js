@@ -3,12 +3,12 @@ import { useLocation, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { Alignment, Button, Navbar, NavbarGroup, NavbarHeading } from "@blueprintjs/core";
 import { Link } from 'react-router-dom';
+
 import SearchInput from '../SearchInput';
 import NavBarUser from './NavBarUser';
 
 function NavBar() {
   const { auth, searchString } = useSelector(state => state);
-  //console.log('Navbar - searchString:', searchString);
   const location = useLocation();
   const navigate = useNavigate();
   const showBackToSearch = !!searchString && location.pathname.substring(0, 8) !== '/search/';
