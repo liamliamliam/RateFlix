@@ -22,9 +22,16 @@ export const setMode = darkMode => {
 
 export const GC = {
   domains: {
-    local: 'http://localhost:5500',
-    hosted: 'https://rateflix-server.herokuapp.com'
+    client: {
+      local: 'http://localhost:3000',
+      hosted: 'https://rateflix.vercel.app/',
+      now: () => GC.domains.client[dev() ? 'local' : 'hosted']
+    },
+    server: {
+      local: 'http://localhost:5500',
+      hosted: 'https://rateflix-server.herokuapp.com',
+      now: () => GC.domains.server[dev() ? 'local' : 'hosted']
+    }
   }
 };
 export const dev = () => !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-export const domain = () => dev() ? GC.domains.local : GC.domains.hosted;

@@ -7,7 +7,7 @@ import {
   Divider
 } from '@blueprintjs/core';
 import { Row, Col } from 'antd';
-import { domain } from '../../../helpers';
+import { GC } from '../../../helpers';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -38,7 +38,7 @@ function LoginPage() {
                 <Button
                   fill
                   onClick={() => {
-                    window.location.href = `${domain()}/auth/google`;
+                    window.location.href = `${GC.domains.server.now()}/auth/google`;
                   }}
                 >
                   Login with Google
