@@ -12,8 +12,8 @@ function HomePage() {
   const [loaded, set_loaded] = useState(false);
 
   const load_stats = async () => {
-    const res = await backend.get('/api/stats');
-    console.log('response from /api/stats:', res.data);
+    const res = await backend.get('/stats');
+    console.log('response from /stats:', res.data);
     set_stats(res.data);
   };
 
