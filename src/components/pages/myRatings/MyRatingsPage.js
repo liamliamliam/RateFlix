@@ -40,7 +40,7 @@ function MyRatingsPage() {
 
   const load_ratings = async () => {
     const dcr = date_created_range.map(d => d.getTime());
-    let url = '/api/myratings';
+    let url = '/myratings';
     // url += `?sr=${score_range.join(',')}`;
     // url += `&yr=${year_range.join(',')}`;
     // url += `&dcr=${date_created_range.map(d => d.toISOString()).join(',')}`;

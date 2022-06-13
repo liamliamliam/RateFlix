@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Row, Col } from 'antd';
-import axios from 'axios';
 
+import { backend } from '../../../axiosConfig';
 import defaultImage from '../../../media/default-movie-poster.jpg';
 import imdbLogo from '../../../media/IMDB_Logo_2016.svg';
 import MovieDetails from './MovieDetails';
@@ -24,7 +24,7 @@ function MoviePage() {
   const loadMovie = async () => {
     try {
       setLoadingMovie(true);
-      const res = await axios.get(`/api/movie/${id}`);
+      const res = await backend.get(`/movie/${id}`);
       console.log('MoviePage - loadMovie() - res:', res);
       setMovie(res.data);
       setLoadingMovie(false);
