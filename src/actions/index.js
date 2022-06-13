@@ -23,14 +23,14 @@ export const logoutUser = () => async dispatch => {
 
 export const searchMovies = (query, page) => async dispatch => {
   dispatch({ type: SEARCH, payload: null });
-  const URL = `/api/search?query=${query}&page=${page}`;
+  const URL = `/search?query=${query}&page=${page}`;
   const res = await backend.get(URL);
   console.log(`Response from ${URL}:`, res.data);
   dispatch({ type: SEARCH, payload: { ...res.data, query } });
 };
 
 export const getMovie = imdbId => async dispatch => {
-  const res = await backend.get(`/api/movie/${imdbId}`);
+  const res = await backend.get(`/movie/${imdbId}`);
   dispatch({ type: GET_MOVIE, payload: res.data });
 };
 
@@ -52,6 +52,6 @@ export const saveRating = (user_id, movie, score, notes = null) => async dispatc
     notes
   };
   console.log('saveRating() - rating:', rating);
-  const res = await backend.post('/api/rating', rating);
+  const res = await backend.post('/rating', rating);
   dispatch({ type: SAVE_RATING, payload: res.data });
 };
