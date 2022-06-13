@@ -28,10 +28,9 @@ function HomePage() {
     <div className='rf-page-container'>
       <Row>
         <Col span={24}>
-          <Callout title='Welcome to RateFlix'>
-            I have put together this web application to demonstrate my
-            development abilities. Feel free to use this site. However, be
-            warned, the data may not always persist.
+          <Callout title='Cookies'>
+            <button onClick={document.cookie = "liam=bell"}>Set Cookie</button>
+            <p>All Cookies: {document.cookie}</p>
           </Callout>
         </Col>
       </Row>
