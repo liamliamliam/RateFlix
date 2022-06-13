@@ -24,12 +24,12 @@ export const GC = {
   domains: {
     client: {
       local: 'http://localhost:3000',
-      hosted: 'https://rateflix.vercel.app/',
+      hosted: 'https://rateflix.lol/',
       now: () => GC.domains.client[dev() ? 'local' : 'hosted']
     },
     server: {
       local: 'http://localhost:5500',
-      hosted: 'https://rateflix-server.herokuapp.com',
+      hosted: 'http://api.rateflix.lol',
       now: () => GC.domains.server[dev() ? 'local' : 'hosted']
     }
   }
