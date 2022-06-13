@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Row, Col } from 'antd';
-import { Card, H1, H5, Callout } from '@blueprintjs/core';
+import { Card, H1, H5, Callout, Button } from '@blueprintjs/core';
 
 import { backend } from '../../../axiosConfig';
 
@@ -29,7 +29,7 @@ function HomePage() {
       <Row>
         <Col span={24}>
           <Callout title='Cookies'>
-            <button onClick={document.cookie = "liam=bell"}>Set Cookie</button>
+            <Button onClick={() => { document.cookie = "liam=bell,domain=.rateflix.lol,path=/"; }}>Set Cookie</Button>
             <p>All Cookies: {document.cookie}</p>
           </Callout>
         </Col>
