@@ -1,4 +1,4 @@
-const tmdbBase = 'http://image.tmdb.org/t/p/';
+const tmdbBase = 'https://image.tmdb.org/t/p/';
 export const parseBackdropFile = (file, size) => {
   return `${tmdbBase}${size || 'w780'}${file}`;
 };
