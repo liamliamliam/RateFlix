@@ -29,7 +29,7 @@ export const GC = {
     },
     server: {
       local: 'http://localhost:5500',
-      hosted: 'http://api.rateflix.lol',
+      hosted: 'https://api.rateflix.lol',
       now: () => GC.domains.server[dev() ? 'local' : 'hosted']
     }
   }
