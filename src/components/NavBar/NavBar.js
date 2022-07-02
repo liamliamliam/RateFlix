@@ -26,7 +26,6 @@ function NavBar() {
         {showBackToSearch && <Button minimal onClick={() => navigate(`/search/${searchString}`)}>Back to Search</Button>}
         {showBackToSearch && <Navbar.Divider />}
         <SearchInput />
-        {!!auth ? <></> : <Button minimal onClick={() => dispatch(actions.fetchUser())}>fetch user</Button>}
         <Navbar.Divider />
         {!!auth ? <NavBarUser /> : <Button minimal onClick={() => navigate('/login')}>Login</Button>}
       </NavbarGroup>

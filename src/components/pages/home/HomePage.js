@@ -28,9 +28,8 @@ function HomePage() {
     <div className='rf-page-container'>
       <Row>
         <Col span={24}>
-          <Callout title='Cookies'>
-            <Button onClick={() => { document.cookie = "liam=bell,domain=.rateflix.lol,path=/"; }}>Set Cookie</Button>
-            <p>All Cookies: {document.cookie}</p>
+          <Callout title='Home page'>
+            
           </Callout>
         </Col>
       </Row>

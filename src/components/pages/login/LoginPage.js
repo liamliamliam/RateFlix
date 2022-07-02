@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   FormGroup,
@@ -7,11 +7,25 @@ import {
   Divider
 } from '@blueprintjs/core';
 import { Row, Col } from 'antd';
+
+import { backend } from '../../../axiosConfig';
 import { GC } from '../../../helpers';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    return () => {
+      setEmail('');
+      setPassword('');
+    }
+  });
+
+  const login = () => {
+    backend.get('/auth/login');
+  }
+
   const LoginRowDivider = () => {
     return <Divider style={{ margin: '16px 0 16px 0' }} />;
   };
@@ -26,11 +40,10 @@ function LoginPage() {
               </Col>
             </Row>
             <Row>
-              <Col span={24}>
-                <span className='bp3-text-small'>
-                  Currently we only allow logging in via Google.
-                </span>
-              </Col>
+              <p>For this site I'm only allowing social logins so as not to 
+              have to store credentials myself. I will be adding 
+              different social logins in the future.</p>
+              <p>For now, please login with your Google account.</p>
             </Row>
             <LoginRowDivider />
             <Row>
